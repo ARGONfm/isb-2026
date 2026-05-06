@@ -1,6 +1,7 @@
 import os 
 
 def ensure_directory(filepath):
+"Создаёт директорию для хранения данных, в случае если её не существует."
     directory = os.path.dirname(filepath)
     if directory and not os.path.exists(directory):
         try:
@@ -16,6 +17,7 @@ def ensure_directory(filepath):
     return True
 
 def write_text(filepath, text):
+"Записывает текст в файл"
     if not ensure_directory(filepath):
         print(f"Директория файла {filepath} не найдена\n")
         return False
@@ -34,6 +36,7 @@ def write_text(filepath, text):
         return False
 
 def read_text(filepath):
+"Считывает текст из файла"
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             text = f.read()
