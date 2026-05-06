@@ -40,48 +40,34 @@ def main ():
 
     settings = load_settings(args.settings)
 
-    if args.generate:
-        mode = 'generate'
-    elif args.encrypt:
-        mode = 'encrypt'
-    elif args.decrypt:
-        mode = 'decrypt'
-    else:
-        mode = None
-
-     match mode:
-        case 'generate':
+    match args:
+        case _ if args.generate:
             print("___Генерация ключей гибридной системы___")
-            from generate import generate
             generate(
                 lenght_symmetric_key=args.keylen,
                 symmetric_key_path=args.sym_out,
                 public_key_path=args.pub_out,
                 private_key_path=args.priv_out
             )
-
-     match mode:
-        case 'encrypt':
+        
+        case _ if args.encrypt:
             print("___Шифрование данных гибридной системой___")
-            from encrypt import encrypt
             encrypt(
                 text_path=args.input or settings['initial_file'],
                 private_key_path=args.priv_key or settings['secret_key'],
                 symmetric_key_path=args.sym_key or settings['symmetric_key'],
                 encrypt_text_path=args.output or settings['encrypted_file']
             )
-
-     match mode:
-        case 'decrypt':
+        
+        case _ if args.decrypt:
             print("___Дешифрование данных гибридной системой___")
-            from decrypt import decrypt
             decrypt(
                 encrypt_text_path=args.input or settings['encrypted_file'],
                 private_key_path=args.priv_key or settings['secret_key'],
                 symmetric_key_path=args.sym_key or settings['symmetric_key'],
                 text_path=args.output or settings['decrypted_file']
             )
-            
+        
         case _:
             print("Ошибка: неизвестный режим работы")
             sys.exit(1)
