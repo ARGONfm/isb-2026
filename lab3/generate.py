@@ -51,21 +51,3 @@ def save_public_key(public_key, filepath):
         print(f"Не удалось сериализовать закрытый ключ в {filepath}: {error}\n")
         return False
 
-
-def generate(lenght_symmetric_key, symmetric_key_path, public_key_path, private_key_path):
-    print ("Генерация всех ключей:\n")
-    
-    ensure_directory(symmetric_key_path)
-    ensure_directory(public_key_path)
-    ensure_directory(private_key_path)
-
-    symmetric_key = generate_symmetric_key(lenght_symmetric_key)
-    private_key, public_key = generate_rsa_keys()
-
-    save_private_key(private_key, private_key_path)
-    print(f"Закрытый ключ сохранен в {private_key_path}\n")
-    save_public_key(public_key, public_key_path)
-    print(f"Открытый ключ сохранен в {public_key_path}\n")
-    encrypt_symmetric_key(symmetric_key, public_key, symmetric_key_path)
-    print(f"Зашифрованный симметричный ключ сохранен в {symmetric_key_path}\n")
-    return True
