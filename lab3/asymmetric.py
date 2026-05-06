@@ -2,9 +2,6 @@ import os
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding as asymmetric_padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
-from file_util import ensure_directory
-
-
 
 def load_private_key(filepath):
     try:
