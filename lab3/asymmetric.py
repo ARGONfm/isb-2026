@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives.asymmetric import padding as asymmetric_padd
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 def load_private_key(filepath):
+    "Загрузка закрытого ключа из файла"
     try:
         with open (filepath, 'rb') as pem_in:
             private_bytes = pem_in.read()
@@ -16,6 +17,7 @@ def load_private_key(filepath):
         return None
 
 def encrypt_symmetric_key(symmetric_key, public_key, filepath):
+    "Шифрование симметричного ключа"
     try: 
         with open(filepath, 'wb') as key_file:
             encrypt_key = public_key.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
@@ -27,6 +29,7 @@ def encrypt_symmetric_key(symmetric_key, public_key, filepath):
         return False
 
 def decrypt_symmetric_key (filepath, private_key):
+    "Дешифрование симметричного ключа"
     try:
         with open (filepath, mode='rb') as key_file:
             symmetric_bytes = key_file.read()
