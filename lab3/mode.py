@@ -25,8 +25,8 @@ from generate import (
 )
 
 def generate(lenght_symmetric_key, symmetric_key_path, public_key_path, private_key_path):
-    "Режим генерации ключей"
-    print ("Генерация всех ключей:\n")
+    "Р РµР¶РёРј РіРµРЅРµСЂР°С†РёРё РєР»СЋС‡РµР№"
+    print ("Р“РµРЅРµСЂР°С†РёСЏ РІСЃРµС… РєР»СЋС‡РµР№:\n")
     
     ensure_directory(symmetric_key_path)
     ensure_directory(public_key_path)
@@ -36,16 +36,16 @@ def generate(lenght_symmetric_key, symmetric_key_path, public_key_path, private_
     private_key, public_key = generate_rsa_keys()
 
     save_private_key(private_key, private_key_path)
-    print(f"Закрытый ключ сохранен в {private_key_path}\n")
+    print(f"Р—Р°РєСЂС‹С‚С‹Р№ РєР»СЋС‡ СЃРѕС…СЂР°РЅРµРЅ РІ {private_key_path}\n")
     save_public_key(public_key, public_key_path)
-    print(f"Открытый ключ сохранен в {public_key_path}\n")
+    print(f"РћС‚РєСЂС‹С‚С‹Р№ РєР»СЋС‡ СЃРѕС…СЂР°РЅРµРЅ РІ {public_key_path}\n")
     encrypt_symmetric_key(symmetric_key, public_key, symmetric_key_path)
-    print(f"Зашифрованный симметричный ключ сохранен в {symmetric_key_path}\n")
+    print(f"Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№ СЃРёРјРјРµС‚СЂРёС‡РЅС‹Р№ РєР»СЋС‡ СЃРѕС…СЂР°РЅРµРЅ РІ {symmetric_key_path}\n")
     return True
 
 def encrypt (text_path, private_key_path, symmetric_key_path, encrypt_text_path):
-    "Режим шифрования текста"
-    print ("Шифрование данных:\n")
+    "Р РµР¶РёРј С€РёС„СЂРѕРІР°РЅРёСЏ С‚РµРєСЃС‚Р°"
+    print ("РЁРёС„СЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С…:\n")
 
     private_key = load_private_key(private_key_path)
     symmetric_key = decrypt_symmetric_key(symmetric_key_path, private_key)
@@ -58,12 +58,12 @@ def encrypt (text_path, private_key_path, symmetric_key_path, encrypt_text_path)
     ensure_directory(encrypt_text_path)
     save_encrypt_text(encrypt_text_path, iv, cipher_text)
 
-    print(f"Зашифрованный текст сохранен в {encrypt_text_path} \n")
+    print(f"Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚ СЃРѕС…СЂР°РЅРµРЅ РІ {encrypt_text_path} \n")
     return True
 
 def decrypt(encrypt_text_path, private_key_path, symmetric_key_path, text_path):
-        "Режим дешифрования текста"
-        print ("Дешифрование данных:\n")
+        "Р РµР¶РёРј РґРµС€РёС„СЂРѕРІР°РЅРёСЏ С‚РµРєСЃС‚Р°"
+        print ("Р”РµС€РёС„СЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С…:\n")
 
         private_key = load_private_key(private_key_path)
         symmetric_key = decrypt_symmetric_key(symmetric_key_path, private_key)
@@ -75,5 +75,5 @@ def decrypt(encrypt_text_path, private_key_path, symmetric_key_path, text_path):
         ensure_directory(text_path)
         write_text(text_path, text)
 
-        print(f"Расшифрованный текст сохранён в {text_path} \n")
+        print(f"Р Р°СЃС€РёС„СЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚ СЃРѕС…СЂР°РЅС‘РЅ РІ {text_path} \n")
         return True
