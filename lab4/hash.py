@@ -1,0 +1,61 @@
+import hashlib
+import hmac
+
+def hash_file(filepath):
+    """
+    Вычисляет SHA-256 хеш файла.
+    Аргументы: filepath: путь к файлу
+    Возвращает: строку с хешем (64 символа) или None, если файл не найден
+    """
+    try:
+        with open(filepath, 'rb') as f:
+            data = f.read()
+            return hashlib.sha256(data).hexdigest()
+    except (FileNotFoundError, PermissionError, OSError):
+        return None
+
+
+def hash_text(text):
+    "Вычисляет SHA-256 хеш строки текста"
+    return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+
+def save_hash(hash, filepath):
+    "Сохраняет хеш в файл"
+    try:
+        with open(filepath, 'w') as f:
+            f.write(hash)
+        return True
+    except (FileNotFoundError, PermissionError, OSError):
+        return False
+
+
+def load_hash(filepath):
+    "Загружает хеш из файла"
+    try:
+        with open(filepath, 'r') as f:
+            hash = f.read().strip()
+            return hash
+    except (FileNotFoundError, PermissionError, OSError):
+        return None
+
+
+def check_integrity(filepath, expected_hash):
+    "Проверяет соответсвие текущего хеша с ожидаемым"
+    actual_hash = hash_file(filepath)
+    if actual_hash is None:
+        return False
+    return actual_hash == expected_hash
+
+
+def avalanche(text1, text2):
+    "Показывает как меняется хеш при малом изменении текста"
+    hash1 = hash_text(text1)
+    hash2 = hash_text(text2)
+
+    bits1 = bin(int(hash1, 16))[2:].zfill(256)
+    bits2 = bin(int(hash2, 16))[2:].zfill(256)
+    diff = sum(1 for i in range(256) if bits1[i] != bits2[i])
+    percent = (diff / 256) * 100
+    
+    return hash1, hash2, diff, percent
