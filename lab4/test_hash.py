@@ -8,8 +8,12 @@ from hash import *
 
 
 class TestHash(unittest.TestCase):
-    
+    """
+    Класс для тестирования функций хеширования.
+    Проверяет корректность работы всех основных функций модуля hash.py.
+    """
     def test_hash_text(self):
+        "Тестирует функцию hash_text()"
         h1 = hash_text("Hello")
         h2 = hash_text("Hello")
         h3 = hash_text("Hello!")
@@ -19,6 +23,7 @@ class TestHash(unittest.TestCase):
         self.assertEqual(len(h1), 64)
     
     def test_hash_file(self):
+        "Тестирует функцию hash_file()"
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
             f.write("Hello")
             tmp = f.name
@@ -30,6 +35,7 @@ class TestHash(unittest.TestCase):
         os.unlink(tmp)
     
     def test_save_load_hash(self):
+        "Тестирует функции save_hash() и load_hash()"
         h = "abc123"
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
             tmp = f.name
@@ -40,6 +46,7 @@ class TestHash(unittest.TestCase):
         os.unlink(tmp)
     
     def test_integrity(self):
+        "Тестирует функцию check_integrity()"
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
             f.write("Hello")
             tmp = f.name
@@ -54,6 +61,7 @@ class TestHash(unittest.TestCase):
         os.unlink(tmp)
     
     def test_avalanche(self):
+        "Тестирует функцию avalanche()"
         h1, h2, diff, percent = avalanche("Hello", "Hello!")
         self.assertGreater(diff, 100)
         self.assertLess(percent, 80)
